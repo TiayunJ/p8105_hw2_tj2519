@@ -27,11 +27,10 @@ pols_df =
          month = ifelse(month == "11", "November", month),
          month = ifelse(month == "12", "December", month)
          ) %>% 
-  mutate(pols_df, president = ifelse(prez_gop == 1, "gop", "dem"))
+  mutate(president = ifelse(prez_gop == 1, "gop", "dem")) %>% 
+  select(-day, -starts_with("prez"))
 
 
-
-print(sapply(pols_df, class))                                    
 view(pols_df)
 ```
 
