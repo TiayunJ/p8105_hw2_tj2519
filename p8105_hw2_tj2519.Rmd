@@ -30,7 +30,17 @@ pols_df =
   mutate(president = ifelse(prez_gop == 1, "gop", "dem")) %>% 
   select(-day, -starts_with("prez"))
 
-
 view(pols_df)
+
+snp_df = 
+  read_csv("data/snp.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, c("month", "day", "year"), "/") %>% 
+  mutate()
+
+
+
+print(sapply(snp_df, class))
+view(snp_df)
 ```
 
