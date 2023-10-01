@@ -30,13 +30,34 @@ pols_df =
   mutate(president = ifelse(prez_gop == 1, "gop", "dem")) %>% 
   select(-day, -starts_with("prez"))
 
+print(sapply(pols_df, class))
 view(pols_df)
 
 snp_df = 
   read_csv("data/snp.csv") %>% 
   janitor::clean_names() %>% 
-  separate(date, c("month", "day", "year"), "/") %>% 
-  mutate()
+  mutate(date = as.Date(date, format = "%m/%d/%y")) %>% 
+  separate(date, c("year", "month", "day"), "-") %>% 
+  mutate(year = as.numeric(year), month = as.numeric(month)) %>% 
+  mutate(year = ifelse(year > as.integer(format(Sys.Date(), "%Y")), 
+                       year - 100, year)) %>% 
+  arrange(year, month) %>% 
+  mutate(month = ifelse(month == 1, "January", month),
+         month = ifelse(month == 2, "February", month),
+         month = ifelse(month == 3, "March", month),
+         month = ifelse(month == 4, "April", month),
+         month = ifelse(month == 5, "May", month),
+         month = ifelse(month == 6, "June", month),
+         month = ifelse(month == 7, "July", month),
+         month = ifelse(month == 8, "August", month),
+         month = ifelse(month == 9, "September", month),
+         month = ifelse(month == 10, "October", month),
+         month = ifelse(month == 11, "November", month),
+         month = ifelse(month == 12, "December", month)
+         ) %>%
+  select(-day)
+  
+  
 
 
 
