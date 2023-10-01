@@ -9,23 +9,24 @@ library(tidyverse)
 
 
 # Problem 1 - process the pols-month, snp, unemployment dataset
+## processing the datasets
 ```{r}
 pols_df = 
   read_csv("data/pols-month.csv") %>% 
   janitor::clean_names() %>% 
-  separate(mon, c("year", "month", "day"), "-") %>% 
-  mutate(month = ifelse(month == "01", "jan", month),
-         month = ifelse(month == "02", "feb", month),
-         month = ifelse(month == "03", "mar", month),
-         month = ifelse(month == "04", "apr", month),
-         month = ifelse(month == "05", "may", month),
-         month = ifelse(month == "06", "jun", month),
-         month = ifelse(month == "07", "jul", month),
-         month = ifelse(month == "08", "aug", month),
-         month = ifelse(month == "09", "sep", month),
-         month = ifelse(month == "10", "oct", month),
-         month = ifelse(month == "11", "nov", month),
-         month = ifelse(month == "12", "dec", month)
+  separate(mon, c("year", "month", "day"), "-", convert = TRUE) %>% 
+  mutate(month = ifelse(month == 1, "jan", month),
+         month = ifelse(month == 2, "feb", month),
+         month = ifelse(month == 3, "mar", month),
+         month = ifelse(month == 4, "apr", month),
+         month = ifelse(month == 5, "may", month),
+         month = ifelse(month == 6, "jun", month),
+         month = ifelse(month == 7, "jul", month),
+         month = ifelse(month == 8, "aug", month),
+         month = ifelse(month == 9, "sep", month),
+         month = ifelse(month == 10, "oct", month),
+         month = ifelse(month == 11, "nov", month),
+         month = ifelse(month == 12, "dec", month)
          ) %>% 
   mutate(president = ifelse(prez_gop == 1, "gop", "dem")) %>% 
   select(-day, -starts_with("prez"))
@@ -71,9 +72,22 @@ unemployment_df =
     names_to = "month",
     values_to = "percent"
   )
-  
 
-
+print(sapply(unemployment_df, class))  
 view(unemployment_df)
+
+
+
 ```
+
+## left join the datasets
+```{r}
+data_join = left_join(pols_df, snp_df) %>% 
+  left_join(., unemployment_df)
+
+view(data_join)
+```
+
+
+
 
