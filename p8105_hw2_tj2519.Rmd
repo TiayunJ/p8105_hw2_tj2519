@@ -90,4 +90,11 @@ view(data_join)
 
 
 
+# Problem 2
+```{r}
+
+```
+
+
+
 
