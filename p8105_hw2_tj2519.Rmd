@@ -106,7 +106,8 @@ trawh_df =
   mutate(homes_powered = weight_tons * 500) %>% 
   mutate(wheel_type = "mr_trashwheel") %>% 
   relocate(wheel_type)
-  
+
+print(sapply(trawh_df, class))
 view(trawh_df)
 ```
 
@@ -121,6 +122,7 @@ prof_trawh_df =
   mutate(wheel_type = "prof_trashwheel") %>% 
   relocate(wheel_type)
 
+print(sapply(prof_trawh_df, class))
  view(prof_trawh_df) 
 ```
 
@@ -135,11 +137,17 @@ gwy_trawh_df =
   mutate(wheel_type = "gwy_trashwheel") %>% 
   relocate(wheel_type)
 
- view(gwy_trawh_df) 
+print(sapply(gwy_trawh_df, class))
+view(gwy_trawh_df) 
 ```
 
 ## part 4 - combine the datasets
 ```{r}
+trashwheel_comb =
+  left_join(trawh_df, prof_trawh_df, by = "dumpster")
+trashwheel_comb = 
+  left_join(trashwheel_comb, )
 
+view(trashwheel_comb)
 ```
 
