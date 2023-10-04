@@ -190,10 +190,13 @@ view(mci_amy)
 ```
 
 
-## part2 - join the two datasets to see and remove the observations that are not qualified for further analysis
-```{r}
-ad_df = left_join(mci_demo, mci_amy, by = "id") %>% 
-  drop_na(baseline)
 
-view(ad_df)
+## part3 - firstly, anti_join the two datasets to see whether there are some observations only existing in only one dataset. Also, combine the datasets containing only the observations existing in both original datasets
+```{r}
+ad_demo_no_match = anti_join(mci_demo, mci_amy, by = "id")
+ad_amy_no_match = anti_join(mci_amy, mci_demo, by = "id")
+
+ad_both = inner_join(mci_demo, mci_amy, by = "id")
+
 ```
+The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` participants and it involves `r ncol(ad_both)` variables. Among all the participants, the mean current age is `r round(mean(ad_both$current_age), digits = 2)` the mean baseline ratio of β42/40 is `r round(mean(ad_both$baseline), digits = 2)`. 
