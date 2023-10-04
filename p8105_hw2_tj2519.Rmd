@@ -117,9 +117,19 @@ prof_trawh_df =
   drop_na(dumpster) %>% 
   mutate(homes_powered = weight_tons * 500)
 
- view(trawh_df) 
+ view(prof_trawh_df) 
 ```
 
+## part3 -  read, clean and create the new weight_tons variable in the  Gwynndal sheet
+```{r}
+gwy_trawh_df = 
+  readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
+                     sheet = "Gwynnda Trash Wheel", range = "A2:L159") %>%
+  janitor::clean_names() %>%
+  drop_na(dumpster) %>% 
+  mutate(homes_powered = weight_tons * 500)
 
+ view(gwy_trawh_df) 
+```
 
 
