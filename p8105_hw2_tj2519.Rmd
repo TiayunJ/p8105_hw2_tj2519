@@ -3,6 +3,11 @@ title: "p8105_hw2_tj2519"
 output: github_document
 date: "2023-09-30"
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, message = FALSE)
+```
+
 ```{r}
 library(tidyverse)
 ```
@@ -90,10 +95,20 @@ view(data_join)
 
 
 
-# Problem 2
+# Problem 2 
+## part1 - read, clean and create the new weight_tons variable in the Mr. Trash Wheel sheet
 ```{r}
-
+trawh_df = 
+  readxl::read_excel("data/202307 Trash Wheel Collection Data.xlsx", 
+                     sheet = "Mr. Trash Wheel", range = "A2:N550") %>% 
+  janitor::clean_names() %>% 
+  drop_na(dumpster) %>% 
+  mutate(homes_powered = weight_tons * 500) %>% 
+  
+view(trawh_df)
 ```
+
+## part2 -  read, clean and create the new weight_tons variable in the Professor Trash Wheel sheet
 
 
 
