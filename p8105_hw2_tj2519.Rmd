@@ -147,7 +147,16 @@ prof_trawh_df_char = lapply(prof_trawh_df, as.character)
 gwy_trawh_df_char = lapply(gwy_trawh_df, as.character)
 
 trawhl_comb = bind_rows(trawh_df_char, prof_trawh_df_char, gwy_trawh_df_char)
+
+view(trawhl_comb) 
 ```
+The final dataset trawhl_comb contains `r nrow(trawhl_comb)` observations and it 
+contains `r ncol(trawhl_comb)` variables. It also tells use in one specific date, a type of trashwheel collect how many of each type of trash and the power used in each day. As for the Mr. Trashwheel, the data is collected between `r min(trawh_df$year)` and `r max(trawh_df$year)`. As for Professor Trash Wheel, the data is collected 
+between `r min(prof_trawh_df$year)` and `r max(prof_trawh_df$year)`. As for Gwynnda, the data is collected between `r min(gwy_trawh_df$year)` and `r max(gwy_trawh_df$year)`. In the Professor Trash Wheel dataset, the total weight of trash collected by Professor Trash Wheel is `r sum(prof_trawh_df$weight_tons)` tons. 
+In the Gwynndal, the cigarette butts collected in July of 2021 is `r filter(gwy_trawh_df, year == 2021, month == "July") %>% pull(cigarette_butts) %>% 
+sum()`
+
+
 
 
 
