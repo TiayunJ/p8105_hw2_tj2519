@@ -41,7 +41,6 @@ print(sapply(pols_df, class))
 view(pols_df)
 
 
-
 snp_df = 
   read_csv("data/snp.csv") %>% 
   janitor::clean_names() %>% 
@@ -123,8 +122,7 @@ prof_trawh_df =
   mutate(wheel_type = "prof_trashwheel") %>% 
   relocate(wheel_type)
 
-print(sapply(prof_trawh_df, class))
- view(prof_trawh_df) 
+view(prof_trawh_df) 
 ```
 
 ## part3 -  read, clean and create the new weight_tons variable in the  Gwynndal sheet
@@ -139,16 +137,14 @@ gwy_trawh_df =
   relocate(wheel_type) %>% 
   mutate(dumpster = 1:155)
 
-print(sapply(gwy_trawh_df, class))
 view(gwy_trawh_df) 
 ```
 
 ## part 4 - combine the datasets
 ```{r}
 trashwheel_comb =
-  left_join(trawh_df, prof_trawh_df, by = "dumpster")
-trashwheel_comb = 
-  left_join(trashwheel_comb, gwy_trawh_df, by = "dumpster")
+  left_join(trawh_df, prof_trawh_df, by = "dumpster") %>% 
+  left_join(., gwy_trawh_df, by = "dumpster")
 
 view(trashwheel_comb)
 ```
