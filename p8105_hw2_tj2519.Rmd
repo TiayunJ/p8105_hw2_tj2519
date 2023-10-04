@@ -183,8 +183,12 @@ mci_amy =
   read_csv("data_mci/mci_amyloid.csv", skip = 1) %>% 
   janitor::clean_names() %>% 
   rename(id = study_id) %>% 
-  mutate(baseline = as.numeric(baseline)) %>% 
-  drop_na(baseline)
+  mutate(baseline = as.numeric(baseline), 
+         time_2 = as.numeric(time_2),
+         time_4 = as.numeric(time_4),
+         time_6 = as.numeric(time_6),
+         time_8 = as.numeric(time_8)) %>% 
+  filter(!is.na(baseline))
 
 view(mci_amy)
 ```
@@ -199,4 +203,4 @@ ad_amy_no_match = anti_join(mci_amy, mci_demo, by = "id")
 ad_both = inner_join(mci_demo, mci_amy, by = "id")
 
 ```
-The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` participants and it involves `r ncol(ad_both)` variables. Among all the participants, the mean current age is `r round(mean(ad_both$current_age), digits = 2)` the mean baseline ratio of β42/40 is `r round(mean(ad_both$baseline), digits = 2)`. 
+The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` participants and it involves `r ncol(ad_both)` variables. Among all the participants, the mean current age is `r round(mean(ad_both$current_age), digits = 2)`, the mean baseline ratio of β42/40 is `r round(mean(ad_both$baseline), digits = 2)`. As the time progress, there are some N/A values appear, which might indicate that there are some loss-of-followup participants during the study period
