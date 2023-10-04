@@ -159,12 +159,21 @@ sum()`*.
 
 
 # Problem 3 
-## import and clean-up the datasets
+## import and clean-up the two datasets
 ```{r}
 mci_demo = 
-  readxl::read_excel("data_mci/202309 Trash Wheel Collection Data.xlsx", 
-                     sheet = "Professor Trash Wheel", range = "A2:F485")
+  read_csv("data_mci/MCI_baseline.csv", skip = 1) %>% 
+  janitor::clean_names() %>% 
+ mutate(sex = recode(sex, `0` = "female", `1` = "male"),
+        apoe4 = recode(apoe4, `0` = "non-carrier", `1` = "carrier"))
+  
 
 view(mci_demo)
+
+mci_amy = 
+  read_csv("data_mci/mci_amyloid.csv", skip = 1) %>% 
+  janitor::clean_names()
+
+view(mci_amy)
 ```
 
