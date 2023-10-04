@@ -99,11 +99,11 @@ view(data_join)
 ## part1 - read, clean and create the new weight_tons variable in the Mr. Trash Wheel sheet
 ```{r}
 trawh_df = 
-  readxl::read_excel("data/202307 Trash Wheel Collection Data.xlsx", 
-                     sheet = "Mr. Trash Wheel", range = "A2:N550") %>% 
+  readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
+                     sheet = "Mr. Trash Wheel", range = "A2:N586") %>% 
   janitor::clean_names() %>% 
   drop_na(dumpster) %>% 
-  mutate(homes_powered = weight_tons * 500) %>% 
+  mutate(homes_powered = weight_tons * 500) 
   
 view(trawh_df)
 ```
