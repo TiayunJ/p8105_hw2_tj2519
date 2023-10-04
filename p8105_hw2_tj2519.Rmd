@@ -107,8 +107,6 @@ trawh_df =
   mutate(wheel_type = "mr_trashwheel") %>% 
   relocate(wheel_type)
 
-colnames(trawh_df) = paste(colnames(trawh_df),"mtw",sep="_")
-
 view(trawh_df)
 ```
 
@@ -123,6 +121,7 @@ prof_trawh_df =
   mutate(wheel_type = "prof_trashwheel") %>% 
   relocate(wheel_type)
 
+print(sapply(prof_trawh_df, class))
 view(prof_trawh_df) 
 ```
 
@@ -143,13 +142,11 @@ view(gwy_trawh_df)
 
 ## part 4 - combine the datasets
 ```{r}
-trashwheel_comb =
-  left_join(trawh_df, prof_trawh_df, by = "dumpster") %>% 
-  left_join(., gwy_trawh_df, by = "dumpster") %>% 
-  janitor::clean_names() %>%
+trawh_df_char = lapply(trawh_df, as.character)
+prof_trawh_df_char = lapply(prof_trawh_df, as.character)
+gwy_trawh_df_char = lapply(gwy_trawh_df, as.character)
 
-
-view(trashwheel_comb)
+trawhl_comb = bind_rows(trawh_df_char, prof_trawh_df_char, gwy_trawh_df_char)
 ```
 
 
