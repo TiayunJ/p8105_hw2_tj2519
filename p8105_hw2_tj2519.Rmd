@@ -109,6 +109,16 @@ view(trawh_df)
 ```
 
 ## part2 -  read, clean and create the new weight_tons variable in the Professor Trash Wheel sheet
+```{r}
+prof_trawh_df = 
+  readxl::read_excel("data/202309 Trash Wheel Collection Data.xlsx", 
+                     sheet = "Professor Trash Wheel", range = "A2:M109") %>%
+  janitor::clean_names() %>%
+  drop_na(dumpster) %>% 
+  mutate(homes_powered = weight_tons * 500)
+
+ view(trawh_df) 
+```
 
 
 
