@@ -159,15 +159,14 @@ sum()`*.
 
 
 # Problem 3 
-## part1 - import and clean-up the baseline dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in each dataset. Also recode the apoe4 and sex variable in mci_baseline.
+## part1 - import and clean-up the baseline dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in each dataset. Also recode the apoe4 and sex variable in mci_baseline. Also get rid of the unqualified participants by using the "filter" function.
 ```{r}
 mci_demo = 
   read_csv("data_mci/MCI_baseline.csv", skip = 1) %>% 
   janitor::clean_names() %>% 
   mutate(sex = recode(sex, `0` = "female", `1` = "male"),
         apoe4 = recode(apoe4, `0` = "non-carrier", `1` = "carrier")) %>% 
-  
-  
+  filter(age_at_onset == "." | current_age < age_at_onset)
   
 view(mci_demo)
 
