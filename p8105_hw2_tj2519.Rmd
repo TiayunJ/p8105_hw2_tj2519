@@ -107,7 +107,8 @@ trawh_df =
   mutate(wheel_type = "mr_trashwheel") %>% 
   relocate(wheel_type)
 
-print(sapply(trawh_df, class))
+colnames(trawh_df) = paste(colnames(trawh_df),"mtw",sep="_")
+
 view(trawh_df)
 ```
 
@@ -144,8 +145,12 @@ view(gwy_trawh_df)
 ```{r}
 trashwheel_comb =
   left_join(trawh_df, prof_trawh_df, by = "dumpster") %>% 
-  left_join(., gwy_trawh_df, by = "dumpster")
+  left_join(., gwy_trawh_df, by = "dumpster") %>% 
+  janitor::clean_names() %>%
+
 
 view(trashwheel_comb)
 ```
+
+
 
