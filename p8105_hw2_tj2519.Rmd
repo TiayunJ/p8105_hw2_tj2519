@@ -10,6 +10,7 @@ knitr::opts_chunk$set(collapse = TRUE, message = FALSE)
 
 ```{r}
 library(tidyverse)
+library(readxl)
 ```
 
 
@@ -135,7 +136,8 @@ gwy_trawh_df =
   drop_na(dumpster) %>% 
   mutate(homes_powered = weight_tons * 500) %>% 
   mutate(wheel_type = "gwy_trashwheel") %>% 
-  relocate(wheel_type)
+  relocate(wheel_type) %>% 
+  mutate(dumpster = 1:155)
 
 print(sapply(gwy_trawh_df, class))
 view(gwy_trawh_df) 
@@ -146,7 +148,7 @@ view(gwy_trawh_df)
 trashwheel_comb =
   left_join(trawh_df, prof_trawh_df, by = "dumpster")
 trashwheel_comb = 
-  left_join(trashwheel_comb, )
+  left_join(trashwheel_comb, gwy_trawh_df, by = "dumpster")
 
 view(trashwheel_comb)
 ```
