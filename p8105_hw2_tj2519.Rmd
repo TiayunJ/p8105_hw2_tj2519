@@ -65,8 +65,6 @@ snp_df =
          ) %>%
   select(-day)
   
-print(sapply(snp_df, class))
-view(snp_df)
 
 
 unemployment_df = 
@@ -90,7 +88,6 @@ view(unemployment_df)
 data_join = left_join(pols_df, snp_df) %>% 
   left_join(., unemployment_df)
 
-view(data_join)
 ```
 
 
@@ -107,7 +104,6 @@ trawh_df =
   mutate(wheel_type = "mr_trashwheel") %>% 
   relocate(wheel_type)
 
-view(trawh_df)
 ```
 
 ## part2 -  read, clean and create the new weight_tons variable in the Professor Trash Wheel sheet
@@ -121,8 +117,6 @@ prof_trawh_df =
   mutate(wheel_type = "prof_trashwheel") %>% 
   relocate(wheel_type)
 
-print(sapply(prof_trawh_df, class))
-view(prof_trawh_df) 
 ```
 
 ## part3 -  read, clean and create the new weight_tons variable in the  Gwynndal sheet
@@ -147,7 +141,7 @@ gwy_trawh_df_char = lapply(gwy_trawh_df, as.character)
 
 trawhl_comb = bind_rows(trawh_df_char, prof_trawh_df_char, gwy_trawh_df_char)
 
-view(trawhl_comb) 
+
 ```
 The final dataset trawhl_comb contains `r nrow(trawhl_comb)` observations and it 
 contains `r ncol(trawhl_comb)` variables. It also tells use in one specific date, a type of trashwheel collect how many of each type of trash and the power used in each day. As for the Mr. Trashwheel, the data is collected between `r min(trawh_df$year)` and `r max(trawh_df$year)`. As for Professor Trash Wheel, the data is collected 
@@ -168,7 +162,6 @@ mci_demo =
   filter(age_at_onset == "." | current_age < age_at_onset)
   
 　
-view(mci_demo)
 
 count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))
   
@@ -190,7 +183,6 @@ mci_amy =
          time_8 = as.numeric(time_8)) %>% 
   drop_na(baseline)
 
-view(mci_amy)
 ```
 
 
