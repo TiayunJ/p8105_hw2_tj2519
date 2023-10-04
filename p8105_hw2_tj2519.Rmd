@@ -158,6 +158,13 @@ sum()`*.
 
 
 
+# Problem 3 
+## import and clean-up the datasets
+```{r}
+mci_demo = 
+  readxl::read_excel("data_mci/202309 Trash Wheel Collection Data.xlsx", 
+                     sheet = "Professor Trash Wheel", range = "A2:F485")
 
-# Problem 3 - process the pols-month, snp, unemployment dataset
-## processing the datasets
+view(mci_demo)
+```
+
