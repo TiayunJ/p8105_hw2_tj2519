@@ -159,21 +159,35 @@ sum()`*.
 
 
 # Problem 3 
-## import and clean-up the two datasets
+## part1 - import and clean-up the baseline dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in each dataset. Also recode the apoe4 and sex variable in mci_baseline.
 ```{r}
 mci_demo = 
   read_csv("data_mci/MCI_baseline.csv", skip = 1) %>% 
   janitor::clean_names() %>% 
- mutate(sex = recode(sex, `0` = "female", `1` = "male"),
-        apoe4 = recode(apoe4, `0` = "non-carrier", `1` = "carrier"))
+  mutate(sex = recode(sex, `0` = "female", `1` = "male"),
+        apoe4 = recode(apoe4, `0` = "non-carrier", `1` = "carrier")) %>% 
   
-
+  
+  
 view(mci_demo)
 
+```
+
+
+```{r}
 mci_amy = 
   read_csv("data_mci/mci_amyloid.csv", skip = 1) %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  rename(id = study_id)
 
 view(mci_amy)
 ```
 
+
+## part2 - join the two datasets to see and remove the observations that are not qualified for further analysis
+```{r}
+ad_df = left_join(mci_demo, mci_amy, by = "id") %>% 
+  drop_na(baseline)
+
+view(ad_df)
+```
