@@ -103,7 +103,9 @@ trawh_df =
                      sheet = "Mr. Trash Wheel", range = "A2:N586") %>% 
   janitor::clean_names() %>% 
   drop_na(dumpster) %>% 
-  mutate(homes_powered = weight_tons * 500) 
+  mutate(homes_powered = weight_tons * 500) %>% 
+  mutate(wheel_type = "mr_trashwheel") %>% 
+  relocate(wheel_type)
   
 view(trawh_df)
 ```
@@ -115,7 +117,9 @@ prof_trawh_df =
                      sheet = "Professor Trash Wheel", range = "A2:M109") %>%
   janitor::clean_names() %>%
   drop_na(dumpster) %>% 
-  mutate(homes_powered = weight_tons * 500)
+  mutate(homes_powered = weight_tons * 500) %>% 
+  mutate(wheel_type = "prof_trashwheel") %>% 
+  relocate(wheel_type)
 
  view(prof_trawh_df) 
 ```
@@ -127,9 +131,15 @@ gwy_trawh_df =
                      sheet = "Gwynnda Trash Wheel", range = "A2:L159") %>%
   janitor::clean_names() %>%
   drop_na(dumpster) %>% 
-  mutate(homes_powered = weight_tons * 500)
+  mutate(homes_powered = weight_tons * 500) %>% 
+  mutate(wheel_type = "gwy_trashwheel") %>% 
+  relocate(wheel_type)
 
  view(gwy_trawh_df) 
 ```
 
+## part 4 - combine the datasets
+```{r}
+
+```
 
