@@ -135,7 +135,6 @@ gwy_trawh_df =
   mutate(homes_powered = weight_tons * 500) %>% 
   mutate(wheel_type = "gwy_trashwheel") %>% 
   relocate(wheel_type) %>% 
-  mutate(dumpster = 1:155)
 
 view(gwy_trawh_df) 
 ```
@@ -159,7 +158,7 @@ sum()`*.
 
 
 # Problem 3 
-## part1 - import and clean-up the baseline dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in each dataset. Also recode the apoe4 and sex variable in mci_baseline. Also get rid of the unqualified participants by using the "filter" function.
+## part1 - import and clean-up the baseline dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in the dataset. Also recode the apoe4 and sex variable in mci_baseline. Also get rid of the unqualified participants by using the "filter" function.
 ```{r}
 mci_demo = 
   read_csv("data_mci/MCI_baseline.csv", skip = 1) %>% 
@@ -168,16 +167,24 @@ mci_demo =
         apoe4 = recode(apoe4, `0` = "non-carrier", `1` = "carrier")) %>% 
   filter(age_at_onset == "." | current_age < age_at_onset)
   
+　
 view(mci_demo)
 
+count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))
+  
+
 ```
+Based on the dataset, `r nrow(mci_demo)` qualified participants are recruited into the study, and `r filter(mci_demo, age_at_onset != ".") %>% count()` of them develop MCI during the study period. The average baseline age is `r mean(mci_demo$current_age) %>% round(digits = 2)` years old. `r count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))* 100`% of the females in this study are APOE4 carriers.
 
 
+## part2 - import and clean-up the mci_amyloid dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in the dataset. Then, as the original baseline variable contains some N/A values, we would want to remove them from the dataset.
 ```{r}
 mci_amy = 
   read_csv("data_mci/mci_amyloid.csv", skip = 1) %>% 
   janitor::clean_names() %>% 
-  rename(id = study_id)
+  rename(id = study_id) %>% 
+  mutate(baseline = as.numeric(baseline)) %>% 
+  drop_na(baseline)
 
 view(mci_amy)
 ```
