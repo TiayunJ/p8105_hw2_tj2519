@@ -165,12 +165,12 @@ mci_demo =
 
 count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))
   
-
+view(mci_demo)
 ```
 Based on the dataset, `r nrow(mci_demo)` qualified participants are recruited into the study, and `r filter(mci_demo, age_at_onset != ".") %>% count()` of them develop MCI during the study period. The average baseline age is `r mean(mci_demo$current_age) %>% round(digits = 2)` years old. `r count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))* 100`% of the females in this study are APOE4 carriers.
 
 
-## part2 - import and clean-up the mci_amyloid dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in the dataset. Then, as the original baseline variable contains some N/A values, we would want to remove them from the dataset.
+## part2 - import and clean-up the mci_amyloid dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in the dataset. Then, as we are dealing with a longitudinal datasets, we would transpose the table use pivot_longer()
 ```{r}
 mci_amy = 
   read_csv("data_mci/mci_amyloid.csv", skip = 1) %>% 
@@ -181,8 +181,12 @@ mci_amy =
          time_4 = as.numeric(time_4),
          time_6 = as.numeric(time_6),
          time_8 = as.numeric(time_8)) %>% 
-  drop_na(baseline)
+  pivot_longer(baseline:time_8,
+               names_to = "time",
+               values_to = "amyloid_ratio"
+               )
 
+view(mci_amy)
 ```
 
 
@@ -192,8 +196,14 @@ mci_amy =
 ad_demo_no_match = anti_join(mci_demo, mci_amy, by = "id")
 ad_amy_no_match = anti_join(mci_amy, mci_demo, by = "id")
 
+view(ad_demo_no_match)
+view(ad_amy_no_match)
+
 ad_both = inner_join(mci_demo, mci_amy, by = "id")
 
 write_csv(ad_both, "data_mci/combined_data.csv")
 ```
+There are 8 qualified participants in the original MCI_baseline dataset but not in the original mci_amyloid dataset. There are 16 qualified participants in the original mci_amyloid dataset but not in the original MCI_baseline dataset.
 The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` participants and it involves `r ncol(ad_both)` variables. Among all the participants, the mean current age is `r round(mean(ad_both$current_age, na.rm = TRUE), digits = 2)`, the mean baseline ratio of β42/40 is `r round(mean(ad_both$baseline), digits = 2)`. As the time progress, there are some N/A values appear, which might indicate that there are some loss-of-followup participants during the study period. At the last time points (time_8), the average β42/40 is `r round(mean(ad_both$time_8, na.rm = TRUE), digits = 2)` if ignoring the N/A values.
+
+
