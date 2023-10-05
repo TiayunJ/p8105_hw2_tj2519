@@ -204,6 +204,5 @@ ad_both = inner_join(mci_demo, mci_amy, by = "id")
 write_csv(ad_both, "data_mci/combined_data.csv")
 ```
 There are 8 qualified participants in the original MCI_baseline dataset but not in the original mci_amyloid dataset. There are 16 qualified participants in the original mci_amyloid dataset but not in the original MCI_baseline dataset.
-The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` participants and it involves `r ncol(ad_both)` variables. Among all the participants, the mean current age is `r round(mean(ad_both$current_age, na.rm = TRUE), digits = 2)`, the mean baseline ratio of β42/40 is `r round(mean(ad_both$baseline), digits = 2)`. As the time progress, there are some N/A values appear, which might indicate that there are some loss-of-followup participants during the study period. At the last time points (time_8), the average β42/40 is `r round(mean(ad_both$time_8, na.rm = TRUE), digits = 2)` if ignoring the N/A values.
-
+The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` observations and `r nrow(ad_both) / 5` qualified participants. It involves `r ncol(ad_both)` variables. 
 
