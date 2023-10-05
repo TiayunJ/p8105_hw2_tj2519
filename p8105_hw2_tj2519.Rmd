@@ -130,7 +130,7 @@ gwy_trawh_df =
   mutate(wheel_type = "gwy_trashwheel") %>% 
   relocate(wheel_type) %>% 
 
-view(gwy_trawh_df) 
+
 ```
 
 ## part 4 - combine the datasets
@@ -165,9 +165,8 @@ mci_demo =
 
 count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))
   
-view(mci_demo)
 ```
-Based on the dataset, `r nrow(mci_demo)` qualified participants are recruited into the study, and `r filter(mci_demo, age_at_onset != ".") %>% count()` of them develop MCI during the study period. The average baseline age is `r mean(mci_demo$current_age) %>% round(digits = 2)` years old. `r count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))* 100`% of the females in this study are APOE4 carriers.
+Based on the dataset, `r nrow(mci_demo)` qualified participants (does not develop MCI at the beginning of the study) are recruited into the study, and `r filter(mci_demo, age_at_onset != ".") %>% count()` of them develop MCI during the study period. The average baseline age is `r mean(mci_demo$current_age) %>% round(digits = 2)` years old. `r count(filter(mci_demo, apoe4 == "carrier" & sex == "female")) / count(filter(mci_demo, sex == "female"))* 100`% of the females in this study are APOE4 carriers.
 
 
 ## part2 - import and clean-up the mci_amyloid dataset, we import and skip the first row of the original dataset. And then clean the names of all variables in the dataset. Then, as we are dealing with a longitudinal datasets, we would transpose the table use pivot_longer()
@@ -186,7 +185,6 @@ mci_amy =
                values_to = "amyloid_ratio"
                )
 
-view(mci_amy)
 ```
 
 
@@ -195,9 +193,6 @@ view(mci_amy)
 ```{r}
 ad_demo_no_match = anti_join(mci_demo, mci_amy, by = "id")
 ad_amy_no_match = anti_join(mci_amy, mci_demo, by = "id")
-
-view(ad_demo_no_match)
-view(ad_amy_no_match)
 
 ad_both = inner_join(mci_demo, mci_amy, by = "id")
 
