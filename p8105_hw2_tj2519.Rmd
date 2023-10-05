@@ -204,5 +204,5 @@ ad_both = inner_join(mci_demo, mci_amy, by = "id")
 write_csv(ad_both, "data_mci/combined_data.csv")
 ```
 There are 8 qualified participants in the original MCI_baseline dataset but not in the original mci_amyloid dataset. There are 16 qualified participants in the original mci_amyloid dataset but not in the original MCI_baseline dataset.
-The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` observations and `r nrow(ad_both) / 5` qualified participants. It involves `r ncol(ad_both)` variables. 
+The combinded dataset ad_both contains the participants in both of the original dataset. It contains `r nrow(ad_both)` observations from `r nrow(ad_both) / 5` qualified participants. It involves `r ncol(ad_both)` variables. 
 
